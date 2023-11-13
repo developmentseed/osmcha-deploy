@@ -9,24 +9,17 @@ spec:
   {{- if .Values.config.enable_tls }}
   tls:
   - hosts:
-    - "{{ .Values.ui.host }}"
+    - "{{ .Values.app.host }}"
     secretName: osmcha-tls
   {{- end }}
   rules:
-  - host: "{{ .Values.ui.host }}"
+  - host: "{{ .Values.app.host }}"
     http:
       paths:
           - path: /
             pathType: Prefix
             backend:
               service: 
-                name: osmcha-ui
+                name: osmcha-app
                 port: 
                   number: 80
-          - path: /api
-            pathType: Prefix
-            backend:
-              service: 
-                name: osmcha-api
-                port: 
-                  number: 5000

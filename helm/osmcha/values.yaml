@@ -6,73 +6,101 @@ secrets:
   osm_access_key:
   osm_secret_key:
 
-api:
+app:
   replicas: 1
-  image:
-    repository: ghcr.io/sunu/osmcha-django
-    tag: test2
-  postgres_host: osmcha-test.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
-  postgres_user: postgres
-  postgres_database: osmcha
-  frontend_tag: v0.86.0-production # should we use this?
-
-
-# OSMCha UI - templates/ui.yaml
-ui:
-  replicas: 1
-  nodeSelector: {}
-  image:
-    repository: ghcr.io/sunu/osmcha-frontend
-    tag: test9
   host: osmcha-test.ds.io
 
-  # Nginx config - templates/config-map.yaml
-  nginxConfig:
-    mime.types: |
-      types {
-          text/html                                        html htm shtml;
-          text/css                                         css;
-          text/xml                                         xml;
-          image/gif                                        gif;
-          image/jpeg                                       jpeg jpg;
-          application/javascript                           js;
-          image/png                                        png;
-          image/svg+xml                                    svg svgz;
-          image/tiff                                       tif tiff;
-          image/x-icon                                     ico;
-          image/x-jng                                      jng;
-          application/font-woff                            woff;
-          application/json                                 json;
-          application/zip                                  zip;
-      }
-    nginx.conf: |
-      worker_processes 4;
+  api:
+    image:
+      repository: ghcr.io/sunu/osmcha-django
+      tag: test5
+    postgres_host: osmcha-test.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
+    postgres_user: postgres
+    postgres_database: osmcha
+    frontend_tag: v0.86.0-production # should we use this?
 
-      events {
-        worker_connections 1024;
-      }
+  # OSMCha frontend - runs as a sidecar to the API
+  ui:
+    replicas: 1
+    nodeSelector: {}
+    image:
+      repository: ghcr.io/sunu/osmcha-frontend
+      tag: test9
 
-      http {
-        include mime.types;
-        index index.html;
-        sendfile on;
+    # Nginx config - templates/config-map.yaml
+    nginxConfig:
+      mime.types: |
+        types {
+            text/html                                        html htm shtml;
+            text/css                                         css;
+            text/xml                                         xml;
+            image/gif                                        gif;
+            image/jpeg                                       jpeg jpg;
+            application/javascript                           js;
+            image/png                                        png;
+            image/svg+xml                                    svg svgz;
+            image/tiff                                       tif tiff;
+            image/x-icon                                     ico;
+            image/x-jng                                      jng;
+            application/font-woff                            woff;
+            application/json                                 json;
+            application/zip                                  zip;
+        }
+      nginx.conf: |
+        worker_processes  4;
 
-        server {
-          listen 80 default_server;
+        events {
+          worker_connections  1024;
+        }
 
-          access_log off;
-          add_header X-Clacks-Overhead          "GNU DCG; JK; MK";
-          add_header Feature-Policy             "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'";
+        http {
+          include /etc/nginx/mime.types;
+          default_type application/octet-stream;
 
-          location ~ ^/static.* {
-            root /assets;
-            expires 14d;
+          log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+          '$status $body_bytes_sent "$http_referer" '
+          '"$http_user_agent" "$http_x_forwarded_for"';
+
+          access_log  /var/log/nginx/access.log  main;
+
+          sendfile        on;
+          #tcp_nopush     on;
+
+          keepalive_timeout  65;
+
+          #gzip  on;
+
+          upstream app {
+            server localhost:5000;
           }
 
-          location / {
-            root /assets;
-            try_files $uri $uri/ /index.html;
-            expires 1s;
+          server {
+            listen 80;
+            charset     utf-8;
+
+            location ~ ^/static.* {
+              root /staticfiles;
+              try_files $uri @proxy_to_frontend;
+            }
+
+            location @proxy_to_frontend {
+              root /assets;
+              try_files $uri @django;
+            }
+
+            location / {
+              root /assets;
+              # checks for static file, if not found proxy to app
+              try_files $uri $uri/ @django;
+            }
+
+            # cookiecutter-django app
+            location @django {
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header Host $http_host;
+              proxy_redirect off;
+              proxy_pass   http://app;
+
+            }
           }
         }
-      }
