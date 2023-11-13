@@ -33,3 +33,21 @@ resource "helm_release" "osmcha-cert-manager" {
     value = true
   }
 }
+
+resource "helm_release" "osmcha-redis" {
+  name = "redis"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart = "redis"
+  version = "18.3.2"
+  namespace = "default"
+
+  set {
+    name = "architecture"
+    value = "standalone"
+  }
+
+  set {
+    name = "auth.enabled"
+    value = "false"
+  }
+}

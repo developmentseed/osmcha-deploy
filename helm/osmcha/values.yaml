@@ -17,6 +17,7 @@ app:
     postgres_host: osmcha-test.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
+    redis_url: redis://redis-master:6379
     frontend_tag: v0.86.0-production # should we use this?
 
   # OSMCha frontend - runs as a sidecar to the API
