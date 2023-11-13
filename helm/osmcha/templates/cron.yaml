@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: osmcha-fetch-changesets-cronjob
+  labels:
+    app: osmcha
+    environment: {{ .Values.config.environment }}
+    release: {{ .Release.Name }}
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  backoffLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: osmcha-fetch-changesets
+            image: {{ .Values.app.api.image.repository }}:{{ .Values.app.api.image.tag }}
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - python manage.py fetchchangesets
+            env:
+            - name: POSTGRES_HOST
+              value: {{ .Values.app.api.postgres_host}}
+            - name: PGHOST
+              value: {{ .Values.app.api.postgres_host}}
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: {{ .Values.app.api.postgres_user}}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: osmcha-db-credentials
+                  key: password
+            - name: POSTGRES_DATABASE
+              value: {{ .Values.app.api.postgres_database}}
+            - name: DJANGO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-secret-key
+                  key: django_secret_key
+            - name: DJANGO_SETTINGS_MODULE
+              value: "config.settings.production"
+            - name: REDIS_URL
+              value: {{ .Values.app.api.redis_url }}
+          restartPolicy: Never
