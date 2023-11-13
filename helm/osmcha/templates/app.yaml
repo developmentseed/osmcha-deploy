@@ -73,12 +73,12 @@ spec:
         volumeMounts:
         - name: staticfiles
           mountPath: /staticfiles
-        # livenessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 5000
-        #   initialDelaySeconds: 600 # 10 minutes, static file collection takes a while
-        #   timeoutSeconds: 30
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 60
+          timeoutSeconds: 30
       - name: frontend-nginx
         image: "{{ .Values.app.ui.image.repository }}:{{ .Values.app.ui.image.tag }}"
         volumeMounts:
