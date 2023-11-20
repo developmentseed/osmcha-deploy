@@ -9,7 +9,6 @@ metadata:
 spec:
   schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
-  backoffLimit: 0
   jobTemplate:
     spec:
       template:

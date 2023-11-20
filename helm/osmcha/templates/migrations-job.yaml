@@ -1,0 +1,61 @@
+# Kubernetes Job to run the database migrations for OSMCha as Helm install/upgrade hook
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: osmcha-migrations-job
+  labels:
+    app: osmcha
+    environment: {{ .Values.config.environment }}
+    release: {{ .Release.Name }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        app: osmcha
+        environment: {{ .Values.config.environment }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: osmcha-migrations
+        image: {{ .Values.app.api.image.repository }}:{{ .Values.app.api.image.tag }}
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - python manage.py migrate
+        env:
+        - name: POSTGRES_HOST
+          value: {{ .Values.app.api.postgres_host}}
+        - name: PGHOST
+          value: {{ .Values.app.api.postgres_host}}
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USER
+          value: {{ .Values.app.api.postgres_user}}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: osmcha-db-credentials
+              key: password
+        - name: POSTGRES_DATABASE
+          value: {{ .Values.app.api.postgres_database}}
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: django-secret-key
+              key: django_secret_key
+        - name: DJANGO_SETTINGS_MODULE
+          value: "config.settings.production"
+        - name: OSMCHA_FRONTEND_VERSION
+          value: {{ .Values.app.api.frontend_tag }}
+        - name: REDIS_URL
+          value: {{ .Values.app.api.redis_url }}
+      restartPolicy: Never
+  backoffLimit: 0
+  parallelism: 1
+  completions: 1
