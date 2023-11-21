@@ -118,18 +118,20 @@ spec:
           value: "https://{{ .Values.app.host }}/oauth-landing.html"
         - name: REDIS_URL
           value: {{ .Values.app.api.redis_url }}
+        - name: DJANGO_SECURE_SSL_REDIRECT
+          value: "False"
         ports:
         - containerPort: 5000
         volumeMounts:
         - name: staticfiles
           mountPath: /staticfiles
-        # livenessProbe:
-        #   httpGet:
-        #     path: /health
-        #     port: 5000
-        #     scheme: HTTP
-        #   initialDelaySeconds: 60
-        #   timeoutSeconds: 30
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            scheme: HTTP
+          # initialDelaySeconds: 60
+          timeoutSeconds: 30
       - name: frontend-nginx
         image: "{{ .Values.app.ui.image.repository }}:{{ .Values.app.ui.image.tag }}"
         volumeMounts:
