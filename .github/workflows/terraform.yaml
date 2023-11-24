@@ -3,13 +3,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'terraform/**' # runs on changes to the terraform directory
   pull_request:
     branches:
       - main
-    paths:
-      - 'terraform/**'
   workflow_dispatch: # allows you to manually run the workflow from the Actions tab
 jobs:
   Terraform:
