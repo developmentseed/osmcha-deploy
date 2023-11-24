@@ -8,12 +8,6 @@ variable "region" {
     default = "us-east-1"
 }
 
-variable "database_password" {
-    description = "The password for the database"
-    sensitive = true
-}
-
-
 locals {
     stack_id = "osmcha"
     prefix = "${local.stack_id}-${var.environment}"

@@ -113,15 +113,3 @@ resource "kubernetes_secret" "django_secret_key" {
     django_secret_key = random_password.django_secret_key.result
   }
 }
-
-# Create a secret in the cluster to store the database password
-
-resource "kubernetes_secret" "database_password" {
-  metadata {
-    name = "osmcha-db-credentials"
-  }
-
-  data = {
-    password = var.database_password
-  }
-}

@@ -5,6 +5,7 @@ config:
 secrets:
   osm_access_key:
   osm_secret_key:
+  osmcha_db_password:
 
 app:
   replicas: 1
@@ -14,7 +15,7 @@ app:
     image:
       repository: ghcr.io/sunu/osmcha-django
       tag: test6
-    postgres_host: osmcha-test.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
+    postgres_host: osmcha-test-withbackedupdata.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
     redis_url: redis://redis-master:6379
