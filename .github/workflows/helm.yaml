@@ -6,7 +6,7 @@ on:
     - main
   workflow_dispatch:
 jobs:
-  build:
+  Helm:
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
