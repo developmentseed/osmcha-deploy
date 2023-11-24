@@ -14,10 +14,10 @@ app:
   api:
     image:
       repository: ghcr.io/sunu/osmcha-django
-      tag: test6
+      tag: test7
     postgres_host: osmcha-test-withbackedupdata.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
-    postgres_database: osmcha
+    postgres_database: postgres
     redis_url: redis://redis-master:6379
     frontend_tag: v0.86.0-production # should we use this?
 
