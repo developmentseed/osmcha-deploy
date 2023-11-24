@@ -1,0 +1,37 @@
+name: Deploy with Helm
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Configure Kubectl
+      uses: azure/setup-kubectl@v3
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Configure kubeconfig
+      run: aws eks update-kubeconfig --region us-east-1 --name osmcha-production-cluster
+    - name: 'Set up Helm'
+      uses: 'Azure/setup-helm@v1'
+      with:
+        version: 'v3.12.0'
+    - name: "Deploy Helm Chart"
+      run: |
+        helm upgrade --install  -f helm/osmcha/values.yaml \
+        osmcha ./helm/osmcha \
+        --set secrets.osm_access_key=${{ secrets.OSM_ACCESS_KEY }} \
+        --set secrets.osm_secret_key=${{ secrets.OSM_SECRET_KEY }} \
+        --set secrets.osmcha_db_password="${{ secrets.OSMCHA_DB_PASSWORD }}"
