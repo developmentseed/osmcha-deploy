@@ -134,6 +134,8 @@ spec:
           timeoutSeconds: 30
       - name: frontend-nginx
         image: "{{ .Values.app.ui.image.repository }}:{{ .Values.app.ui.image.tag }}"
+        ports:
+        - containerPort: 80
         volumeMounts:
           - name: osmcha-frontend-nginx-config
             mountPath: /etc/nginx
