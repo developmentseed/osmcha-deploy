@@ -16,7 +16,7 @@ metadata:
     environment: {{ .Values.config.environment }}
     release: {{ .Release.Name }}
   annotations:
-    nginx-configmap-hash: {{ .Values.app.ui.nginxConfig | sha256sum | trunc 8 }}
+    nginx-configmap-hash: {{ .Values.app.ui.nginxConfig | toJson | sha256sum | trunc 8 }}
 spec:
   replicas: {{ .Values.app.replicas }}
   selector:
