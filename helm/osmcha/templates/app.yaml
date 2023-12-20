@@ -15,8 +15,6 @@ metadata:
     app: osmcha
     environment: {{ .Values.config.environment }}
     release: {{ .Release.Name }}
-  annotations:
-    nginx-configmap-hash: {{ .Values.app.ui.nginxConfig | toJson | sha256sum | trunc 8 }}
 spec:
   replicas: {{ .Values.app.replicas }}
   selector:
@@ -26,6 +24,8 @@ spec:
     metadata:
       labels:
         app: osmcha-app
+      annotations:
+        nginx-configmap-hash: {{ .Values.app.ui.nginxConfig | toJson | sha256sum | trunc 8 }}
     spec:
       initContainers:
       - name: osmcha-init
