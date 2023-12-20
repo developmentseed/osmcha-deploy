@@ -87,7 +87,7 @@ app:
 
             location @proxy_to_frontend {
               root /assets;
-              try_files $uri;
+              try_files $uri $uri/ =404;
             }
 
             location /api {
@@ -108,7 +108,7 @@ app:
             location / {
               root /assets;
               # checks for static file, if not found proxy to app
-              try_files $uri $uri/;
+              try_files $uri $uri/ /index.html;
             }
           }
         }
