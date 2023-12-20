@@ -87,22 +87,28 @@ app:
 
             location @proxy_to_frontend {
               root /assets;
-              try_files $uri @django;
+              try_files $uri;
             }
 
             location / {
               root /assets;
               # checks for static file, if not found proxy to app
+              try_files $uri $uri/;
+            }
+
+            location /api {
               try_files $uri $uri/ @django;
             }
 
-            # cookiecutter-django app
+            location /admin {
+              try_files $uri $uri/ @django;
+            }
+
             location @django {
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
               proxy_set_header Host $http_host;
               proxy_redirect off;
               proxy_pass   http://app;
-
             }
           }
         }
