@@ -90,12 +90,6 @@ app:
               try_files $uri;
             }
 
-            location / {
-              root /assets;
-              # checks for static file, if not found proxy to app
-              try_files $uri $uri/;
-            }
-
             location /api {
               try_files $uri $uri/ @django;
             }
@@ -109,6 +103,12 @@ app:
               proxy_set_header Host $http_host;
               proxy_redirect off;
               proxy_pass   http://app;
+            }
+
+            location / {
+              root /assets;
+              # checks for static file, if not found proxy to app
+              try_files $uri $uri/;
             }
           }
         }
