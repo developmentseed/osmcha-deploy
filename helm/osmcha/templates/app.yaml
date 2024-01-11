@@ -72,6 +72,10 @@ spec:
         image: {{ .Values.app.api.image.repository }}:{{ .Values.app.api.image.tag }}
         command:
         - gunicorn
+        - "--timeout"
+        - "3600"
+        - "--keep-alive"
+        - "60"
         - "--workers"
         - "4"
         - "--bind"
