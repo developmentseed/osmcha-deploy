@@ -27,7 +27,7 @@ app:
     nodeSelector: {}
     image:
       repository: ghcr.io/sunu/osmcha-frontend
-      tag: 3d2b25c748e9957d34360061b630d89ea368a651
+      tag: latest
 
     # Nginx config - templates/config-map.yaml
     nginxConfig:
