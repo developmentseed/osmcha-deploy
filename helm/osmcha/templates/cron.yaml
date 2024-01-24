@@ -17,10 +17,14 @@ spec:
           - name: osmcha-fetch-changesets
             image: {{ .Values.app.api.image.repository }}:{{ .Values.app.api.image.tag }}
             imagePullPolicy: IfNotPresent
+            # Sometimes the fetchchangesets command hangs, so we set a timeout of 10 minutes
+            # to prevent the job from hanging idly.
+            # The timeout command kills the process after 10 minutes and forces the job to restart
+            # with the next scheduled run.
             command:
             - /bin/sh
             - -c
-            - python manage.py fetchchangesets
+            - timeout 600s python manage.py fetchchangesets
             env:
             - name: POSTGRES_HOST
               value: {{ .Values.app.api.postgres_host}}
