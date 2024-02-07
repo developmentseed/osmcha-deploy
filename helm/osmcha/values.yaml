@@ -13,7 +13,7 @@ app:
 
   api:
     image:
-      repository: ghcr.io/willemarcel/osmcha-django
+      repository: ghcr.io/osmcha/osmcha-django
       tag: bb038f164f174783775927d14ccc63366f9f2761
     postgres_host: osmcha-test-withbackedupdata.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
