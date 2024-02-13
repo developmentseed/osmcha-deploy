@@ -15,7 +15,6 @@ app:
     image:
       repository: ghcr.io/osmcha/osmcha-django
       tag: cb935f5044b1dfc0afac9e690c84544f6c54ec70
-    # todo: update `postgres_host` to the new database
     postgres_host: osmcha-database.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
