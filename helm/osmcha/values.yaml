@@ -9,15 +9,15 @@ secrets:
 
 app:
   replicas: 1
-  host: osmcha-test.ds.io
+  host: osmcha.org
 
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
       tag: cb935f5044b1dfc0afac9e690c84544f6c54ec70
-    postgres_host: osmcha-test-withbackedupdata.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
+    postgres_host: osmcha-database.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
-    postgres_database: postgres
+    postgres_database: osmcha
     redis_url: redis://redis-master:6379
     frontend_tag: v0.86.0-production # should we use this?
 
@@ -26,8 +26,8 @@ app:
     replicas: 1
     nodeSelector: {}
     image:
-      repository: ghcr.io/sunu/osmcha-frontend
-      tag: latest
+      repository: ghcr.io/osmcha/osmcha-frontend
+      tag: d16771e4941c4692dac36b3cbb6a92ac2a49531b
 
     # Nginx config - templates/config-map.yaml
     nginxConfig:
