@@ -73,9 +73,9 @@ spec:
         command:
         - gunicorn
         - "--timeout"
-        - "60"
+        - "30"
         - "--keep-alive"
-        - "60"
+        - "2"
         - "--workers"
         - "4"
         - "--bind"
