@@ -27,7 +27,7 @@ spec:
         command:
         - /bin/sh
         - -c
-        - sleep 3600 # Sleep for 1 hour to debug connection error
+        - python manage.py migrate
         env:
         - name: POSTGRES_HOST
           value: {{ .Values.app.api.postgres_host}}
