@@ -77,7 +77,7 @@ spec:
         - "--keep-alive"
         - "2"
         - "--workers"
-        - "4"
+        - "9"
         - "--bind"
         - 0.0.0.0:5000
         - --log-file
