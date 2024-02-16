@@ -14,7 +14,7 @@ app:
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
-      tag: cb935f5044b1dfc0afac9e690c84544f6c54ec70
+      tag: 8262c7cf94d553134a8333c705a88589ccefe95d
     postgres_host: osmcha-database.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
@@ -27,7 +27,7 @@ app:
     nodeSelector: {}
     image:
       repository: ghcr.io/osmcha/osmcha-frontend
-      tag: d16771e4941c4692dac36b3cbb6a92ac2a49531b
+      tag: 953433bc07b27d58096d4ed9c8e6f247176df64e
 
     # Nginx config - templates/config-map.yaml
     nginxConfig:
