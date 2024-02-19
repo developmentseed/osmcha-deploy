@@ -14,7 +14,7 @@ app:
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
-      tag: 8262c7cf94d553134a8333c705a88589ccefe95d
+      tag: f267991c1d35929763bfb7a75dfd1e75afe01c69
     postgres_host: osmcha-database.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
