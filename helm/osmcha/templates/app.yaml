@@ -37,6 +37,14 @@ spec:
           python manage.py collectstatic --noinput
           mkdir -p /staticfiles/static
           cp -r /app/staticfiles/* /staticfiles/static/
+        resources:
+          requests:
+            cpu: "2"
+            memory: "6Gi"
+          limits:
+            cpu: "2"
+            memory: "6Gi"
+
         env:
         - name: POSTGRES_HOST
           value: {{ .Values.app.api.postgres_host}}
@@ -75,7 +83,7 @@ spec:
         - "--keep-alive"
         - "2"
         - "--workers"
-        - "9"
+        - "5"
         - "--bind"
         - 0.0.0.0:5000
         - --log-file
