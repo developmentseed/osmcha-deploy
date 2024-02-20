@@ -103,6 +103,9 @@ app:
               proxy_set_header Host $http_host;
               proxy_redirect off;
               proxy_pass   http://app;
+              fastcgi_connect_timeout 130;
+              fastcgi_send_timeout 130;
+              fastcgi_read_timeout 130;
             }
 
             location / {
