@@ -8,7 +8,7 @@ secrets:
   osmcha_db_password:
 
 app:
-  replicas: 4
+  replicas: 2
   host: osmcha.org
 
   api:
