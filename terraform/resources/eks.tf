@@ -102,6 +102,7 @@ module "karpenter" {
 
   cluster_name = module.eks.cluster_name
 
+  irsa_name = "karpenter-irsa"
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
   irsa_namespace_service_accounts = ["karpenter:karpenter"]
 
