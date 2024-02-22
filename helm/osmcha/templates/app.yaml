@@ -37,13 +37,6 @@ spec:
           python manage.py collectstatic --noinput
           mkdir -p /staticfiles/static
           cp -r /app/staticfiles/* /staticfiles/static/
-        resources:
-          requests:
-            cpu: "2"
-            memory: "6Gi"
-          limits:
-            cpu: "2"
-            memory: "6Gi"
 
         env:
         - name: POSTGRES_HOST
@@ -91,6 +84,8 @@ spec:
         - --access-logfile
         - "-"
         - config.wsgi
+        resources:
+          {{- toYaml .Values.app.api.resources | nindent 10 }}
         env:
         - name: POSTGRES_HOST
           value: {{ .Values.app.api.postgres_host}}

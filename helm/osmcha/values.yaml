@@ -15,6 +15,13 @@ app:
     image:
       repository: ghcr.io/osmcha/osmcha-django
       tag: f267991c1d35929763bfb7a75dfd1e75afe01c69
+    resources:
+      requests:
+        memory: "2G"
+        cpu: "1"
+      limits:
+        memory: "4G"
+        cpu: "2"
     postgres_host: osmcha-database.cz9ktd5n6tn5.us-east-1.rds.amazonaws.com
     postgres_user: postgres
     postgres_database: osmcha
@@ -22,7 +29,6 @@ app:
 
   # OSMCha frontend - runs as a sidecar to the API
   ui:
-    replicas: 1
     nodeSelector: {}
     image:
       repository: ghcr.io/osmcha/osmcha-frontend
