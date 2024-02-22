@@ -102,15 +102,17 @@ module "karpenter" {
 
   cluster_name = module.eks.cluster_name
 
-  create_node_iam_role = false
-  node_iam_role_arn = module.eks.eks_managed_node_groups["regular"].iam_role_arn
+  irsa_oidc_provider_arn = module.eks.oidc_provider_arn
+  irsa_namespace_service_accounts = ["karpenter:karpenter"]
 
-  # Since the nodegroup role will already have an access entry
-  create_access_entry = false
+  create_iam_role = false
+  iam_role_arn = module.eks.eks_managed_node_groups["initial"].iam_role_arn
 
   tags = {
     Environment = "production"
-    Terraform   = "true"
+    Terraform = "true"
+    Project = "osmcha"
+    Karpenter = "true"
   }
 }
 
