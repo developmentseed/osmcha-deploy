@@ -96,6 +96,24 @@ module "eks" {
   }
 }
 
+module "karpenter" {
+  source = "terraform-aws-modules/eks/aws//modules/karpenter"
+  version = "19.19.0"
+
+  cluster_name = module.eks.cluster_name
+
+  create_node_iam_role = false
+  node_iam_role_arn = module.eks.eks_managed_node_groups["regular"].iam_role_arn
+
+  # Since the nodegroup role will already have an access entry
+  create_access_entry = false
+
+  tags = {
+    Environment = "production"
+    Terraform   = "true"
+  }
+}
+
 # Secret for Django secret key
 
 resource "random_password" "django_secret_key" {
