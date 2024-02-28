@@ -24,7 +24,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - timeout 600s python manage.py fetchchangesets
+            - timeout 3600s python manage.py fetchchangesets
             env:
             - name: POSTGRES_HOST
               value: {{ .Values.app.api.postgres_host}}
