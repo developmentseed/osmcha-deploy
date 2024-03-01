@@ -14,7 +14,7 @@ app:
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
-      tag: 6c6c36cf755849ed5efd90693cc61b8e8eb9cf5c
+      tag: 61a80e897b45fb9b1a177bf433fb79bfa7fda59d
     resources:
       requests:
         memory: "2G"
