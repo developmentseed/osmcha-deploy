@@ -62,7 +62,7 @@ metadata:
     environment: {{ .Values.config.environment }}
     release: {{ .Release.Name }}
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "*/1 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
