@@ -34,4 +34,7 @@ jobs:
         osmcha ./helm/osmcha \
         --set secrets.osm_access_key=${{ secrets.OSM_ACCESS_KEY }} \
         --set secrets.osm_secret_key=${{ secrets.OSM_SECRET_KEY }} \
-        --set secrets.osmcha_db_password="${{ secrets.OSMCHA_DB_PASSWORD }}"
+        --set secrets.osmcha_db_password="${{ secrets.OSMCHA_DB_PASSWORD }}" \
+        --set secrets.real_changesets_access_key=${{ secrets.REAL_CHANGESETS_ACCESS_KEY }} \
+        --set secrets.real_changesets_secret_key=${{ secrets.REAL_CHANGESETS_SECRET_KEY }} \
+        --set secrets.osmcha_admin_token=${{ secrets.OSMCHA_ADMIN_TOKEN }}
