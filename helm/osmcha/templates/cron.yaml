@@ -76,7 +76,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - yarn update-queue
+            - timeout 600s yarn update-queue
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
