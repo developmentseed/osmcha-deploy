@@ -51,3 +51,47 @@ spec:
             - name: REDIS_URL
               value: {{ .Values.app.api.redis_url }}
           restartPolicy: Never
+
+---
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: osmcha-adiff-service-cronjob
+    app: osmcha
+    environment: {{ .Values.config.environment }}
+    release: {{ .Release.Name }}
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: osmcha-adiff-service-process-replication
+            image: {{ .Values.adiff_service.image.repository }}:{{ .Values.adiff_service.image.tag }}
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - yarn update-queue
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: osmcha-real-changesets-credentials
+                  key: access_key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: osmcha-real-changesets-credentials
+                  key: secret_key
+            - name: OsmchaAdminToken
+              valueFrom:
+                secretKeyRef:
+                  name: osmcha-admin-token
+                  key: osmcha_admin_token
+            - name: RedisServer
+              value: {{ .Values.adiff_service.redis_url }}
+          restartPolicy: Never

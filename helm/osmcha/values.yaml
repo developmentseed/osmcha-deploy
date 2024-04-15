@@ -6,6 +6,9 @@ secrets:
   osm_access_key:
   osm_secret_key:
   osmcha_db_password:
+  real_changesets_access_key:
+  real_changesets_secret_key:
+  osmcha_admin_token:
 
 app:
   replicas: 2
@@ -120,3 +123,10 @@ app:
             }
           }
         }
+
+# OSMCha adiff service
+adiff_service:
+  image:
+    repository: ghcr.io/osmcha/osm-adiff-service
+    tag: 8f83fd410d02795f5d321a54fdcfa39b8c7b29c9
+  redis_url: redis://redis-master:6379
