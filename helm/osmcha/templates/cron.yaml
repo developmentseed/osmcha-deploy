@@ -24,8 +24,7 @@ spec:
             command:
             - /bin/sh
             - -c
-            - sleep 3600
-            # - timeout 600s python manage.py fetchchangesets
+            - timeout 600s python manage.py fetchchangesets
             env:
             - name: POSTGRES_HOST
               value: {{ .Values.app.api.postgres_host}}
@@ -77,7 +76,8 @@ spec:
             command:
             - /bin/sh
             - -c
-            - timeout 600s yarn update-queue
+            - sleep 3600
+            # - timeout 600s yarn update-queue
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
