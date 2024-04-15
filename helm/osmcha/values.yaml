@@ -128,5 +128,5 @@ app:
 adiff_service:
   image:
     repository: ghcr.io/osmcha/osm-adiff-service
-    tag: 6b62d62bdaafde1138f21cfd3edbcb605ec962a5
+    tag: 49c757613671784a53d6066725674a133424310f
   redis_url: redis://redis-master:6379
