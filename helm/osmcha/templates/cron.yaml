@@ -2,6 +2,10 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: osmcha-fetch-changesets-cronjob
+  labels:
+    app: osmcha
+    environment: {{ .Values.config.environment }}
+    release: {{ .Release.Name }}
 spec:
   schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
@@ -54,6 +58,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: osmcha-adiff-service-cronjob
+  labels:
     app: osmcha
     environment: {{ .Values.config.environment }}
     release: {{ .Release.Name }}
