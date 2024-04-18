@@ -126,7 +126,8 @@ app:
 
 # OSMCha adiff service
 adiff_service:
+  replicas: 2
   image:
     repository: ghcr.io/osmcha/osm-adiff-service
-    tag: 49c757613671784a53d6066725674a133424310f
+    tag: 145be426880b33072b1db8300f7d736feb780e97
   redis_url: redis://redis-master:6379
