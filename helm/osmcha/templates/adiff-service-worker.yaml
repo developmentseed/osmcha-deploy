@@ -42,4 +42,3 @@ spec:
                   key: osmcha_admin_token
             - name: RedisServer
               value: {{ .Values.adiff_service.redis_url }}
-      restartPolicy: Never
