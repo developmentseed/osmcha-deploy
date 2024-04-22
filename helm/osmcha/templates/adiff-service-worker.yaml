@@ -43,4 +43,4 @@ spec:
             - name: RedisServer
               value: {{ .Values.adiff_service.redis_url }}
             - name: NumberOfWorkers
-              value: {{ .Values.adiff_service.worker_count }}
+              value: {{ .Values.adiff_service.worker_count | quote }}
