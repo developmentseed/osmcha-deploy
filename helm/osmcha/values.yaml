@@ -131,3 +131,4 @@ adiff_service:
     repository: ghcr.io/osmcha/osm-adiff-service
     tag: f86fd1ce4e78fa0ec31227559a65111d6a4595e7
   redis_url: redis://redis-master:6379
+  worker_count: 7
