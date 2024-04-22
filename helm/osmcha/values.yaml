@@ -126,7 +126,7 @@ app:
 
 # OSMCha adiff service
 adiff_service:
-  replicas: 2
+  replicas: 1
   image:
     repository: ghcr.io/osmcha/osm-adiff-service
     tag: f86fd1ce4e78fa0ec31227559a65111d6a4595e7
