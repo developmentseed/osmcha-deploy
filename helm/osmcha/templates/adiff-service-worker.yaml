@@ -44,3 +44,5 @@ spec:
               value: {{ .Values.adiff_service.redis_url }}
             - name: NumberOfWorkers
               value: {{ .Values.adiff_service.worker_count | quote }}
+            - name: RestartInterval
+              value: {{ .Values.adiff_service.restart_interval | quote }}
