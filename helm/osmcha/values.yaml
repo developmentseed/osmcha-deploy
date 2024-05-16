@@ -129,6 +129,6 @@ adiff_service:
   replicas: 1
   image:
     repository: ghcr.io/osmcha/osm-adiff-service
-    tag: ebc8ccf4515c6c20f1e477cb1ff8d9d8d3793d1a
+    tag: 5bce92983307cabd99ea1d7e82c7cd8ea2e22be5
   redis_url: redis://redis-master:6379
   worker_count: "14"
