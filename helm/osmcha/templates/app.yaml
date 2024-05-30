@@ -109,18 +109,18 @@ spec:
               key: django_secret_key
         - name: DJANGO_SETTINGS_MODULE
           value: "config.settings.production"
-        - name: OAUTH_OSM_KEY
+        - name: OAUTH2_OSM_KEY
           valueFrom:
             secretKeyRef:
               name: osm-app-credentials
               key: access_key
-        - name: OAUTH_OSM_SECRET
+        - name: OAUTH2_OSM_SECRET
           valueFrom:
             secretKeyRef:
               name: osm-app-credentials
               key: secret_key
         - name: OAUTH_REDIRECT_URI
-          value: "https://{{ .Values.app.host }}/oauth-landing.html"
+          value: "https://{{ .Values.app.host }}/authorized"
         - name: REDIS_URL
           value: {{ .Values.app.api.redis_url }}
         - name: DJANGO_SECURE_SSL_REDIRECT
