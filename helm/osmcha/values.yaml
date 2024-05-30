@@ -17,7 +17,7 @@ app:
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
-      tag: 53e1ed14ef5ea7ddf4244d9de4bcb85153f83a4e
+      tag: 680789c59068696484a4973c3f2377a11341385f
     resources:
       requests:
         memory: "2G"
@@ -35,7 +35,7 @@ app:
     nodeSelector: {}
     image:
       repository: ghcr.io/osmcha/osmcha-frontend
-      tag: 01e53b22aa517f0a6e09452d3155fd6c78e4eb65
+      tag: 0c875813358ccf19231e50038b8e8a5e6c98b280
 
     # Nginx config - templates/config-map.yaml
     nginxConfig:
