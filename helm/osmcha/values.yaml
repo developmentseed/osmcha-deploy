@@ -17,7 +17,7 @@ app:
   api:
     image:
       repository: ghcr.io/osmcha/osmcha-django
-      tag: 55db5b1a92dec21fc0b2ecc73df1fa8d842ddc67
+      tag: 59281c7cb1796bcd7406559d1186a70660adec10
     resources:
       requests:
         memory: "2G"
@@ -129,6 +129,6 @@ adiff_service:
   replicas: 1
   image:
     repository: ghcr.io/osmcha/osm-adiff-service
-    tag: 5bce92983307cabd99ea1d7e82c7cd8ea2e22be5
+    tag: af3e39eebf3a8f2b4bd41cf416ef265c76b98c22
   redis_url: redis://redis-master:6379
   worker_count: "14"
