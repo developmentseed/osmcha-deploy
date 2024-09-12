@@ -35,7 +35,7 @@ app:
     nodeSelector: {}
     image:
       repository: ghcr.io/osmcha/osmcha-frontend
-      tag: 8177b71b5ce836f98391a2664682f0141333fa7a
+      tag: 646874a3739a03b6c91c131f652f4e727e5aa408
 
     # Nginx config - templates/config-map.yaml
     nginxConfig:
